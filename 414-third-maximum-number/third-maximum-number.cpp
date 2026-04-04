@@ -1,28 +1,34 @@
 class Solution {
 public:
     int thirdMax(vector<int>& nums) {
-        // Step 1: Store distinct elements
-        unordered_set<int> distinct;
-        for (int i = 0; i < nums.size(); i++) {
-            distinct.insert(nums[i]);
+        long first = LONG_MIN, second = LONG_MIN, third = LONG_MIN;
+
+        for (long num : nums) {
+            // Skip duplicates
+            if (num == first || num == second || num == third) continue;
+
+            if (num > first) {
+                third = second;
+                second = first;
+                first = num;
+            }
+            else if (num > second) {
+                third = second;
+                second = num;
+            }
+            else if (num > third) {
+                third = num;
+            }
         }
 
-        // Step 2: Push all distinct elements into max-heap
-        priority_queue<int> pq;
-        for(int i : distinct)
-        {
-            pq.push(i);
+        // If third was never updated, return first (maximum)
+        if (third == LONG_MIN) {
+            // Less than 3 distinct numbers → return maximum
+            return first;
         }
-        // Step 3: If less than 3 distinct numbers, return maximum
-        if (pq.size() < 3) {
-            return pq.top();
+        else {
+            // Third maximum exists
+            return third;
         }
-
-        // Step 4: Pop first maximum
-        pq.pop();
-        // Step 5: Pop second maximum
-        pq.pop();
-        // Step 6: Third maximum is now on top
-        return pq.top();
     }
 };
