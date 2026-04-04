@@ -11,12 +11,12 @@ public:
         int max_count = -1;
 
         // Check for lucky numbers in the range 1..500
-        for(int i = 1; i <= 500; i++) {
+        for(int i = 500; i >=1; i--) {
             if(freq[i] == i) {
-                max_count = max(max_count, i);
+                return i;
             }
         }
+        return -1;
 
-        return max_count;
     }
 };
