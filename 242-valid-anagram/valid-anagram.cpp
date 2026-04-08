@@ -1,24 +1,32 @@
 class Solution {
 public:
     bool isAnagram(string s, string t) {
-        int n=s.length();
-//Two words (or strings) are anagrams of each other if:
-//They contain exactly the same characters
-//The frequency of each character is the same
-//The order does not matter 
-if(s.length()!=t.length())
-{
-    return false;
-}
-sort(s.begin(),s.end());
-sort(t.begin(),t.end());
-if(s==t)
-{
-    return true;
-}
-else
-{
-    return false;
-}
+        // If lengths differ, strings cannot be anagrams
+        if (s.length() != t.length()) {
+            return false;
+        }
+
+        int freq[26] = {0};  // Frequency array for lowercase letters
+
+        // Count characters in the first string
+        for (int i = 0; i < s.length(); i++) {
+            char c = s[i];
+            freq[c - 'a']++;// 'a' maps to index 0, 'b' to 1, ..., 'z' to 25
+        }
+
+        // Subtract character counts using the second string
+        for (int i = 0; i < t.length(); i++) {
+            char c = t[i];
+            freq[c - 'a']--;
+        }
+
+        // Check if all frequencies are zero
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] != 0) {
+                return false;  // Mismatch found
+            }
+        }
+
+        return true;  // Strings are anagrams
     }
 };
