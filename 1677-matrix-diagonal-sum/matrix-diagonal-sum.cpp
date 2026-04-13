@@ -2,27 +2,17 @@ class Solution {
 public:
     int diagonalSum(vector<vector<int>>& mat) {
       int m=mat.size();
-      int n=mat[0].size();
       int sum=0;
       for(int i=0;i<m;i++)
-      {
-        for(int j=0;j<n;j++)
-        {
-            if(i==j)
-            {
-                sum=sum+mat[i][j];
-            }
-        }
+      {//sum of primary diagonal
+        sum=sum+mat[i][i];
+        //secondary diagonal
+        sum=sum+mat[i][m-1-i];
       }
-      for(int i=0;i<m;i++)
+      //remove double counted middle element(only if odd size)
+      if(m%2==1)
       {
-        for(int j=0;j<n;j++)
-        {
-            if(i+j==n-1 && i!=j)
-            {
-                sum=sum+mat[i][j];
-            }
-        }
+        sum=sum-mat[m/2][m/2];
       }
       return sum;
     }
